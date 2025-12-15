@@ -1,3 +1,4 @@
+// tehtävä 1 (testitiedosto kaksi)
 describe('Wikipedia JAMK end-to-end path', () => {
     it('visits fi.wikipedia, searches JAMK, verifies page, scrolls to Kampukset, waits, changes language to English, and verifies', () => {
         // go to wikipedia fi
