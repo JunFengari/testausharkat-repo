@@ -1,32 +1,20 @@
 // tehtävä 1 (testitiedosto kaksi)
+// Tässä meni ikuisuus saada wikipedian haku toimimaan, poistin kokonaan
+// toisen kansion jossa yritin troubleshootata ongelmaa tekoölyn kanssa, mutta siitä ei
+// tullut mitään. Tämä versio nyt toimii.
+// tähän kansioon en lisänyt uncaught error exception koodia
+
 describe('Wikipedia JAMK end-to-end path', () => {
     it('visits fi.wikipedia, searches JAMK, verifies page, scrolls to Kampukset, waits, changes language to English, and verifies', () => {
         // go to wikipedia fi
         cy.visit('https://fi.wikipedia.org');
 
-        // fails! opens up some page "Ja", something to do with autocomplete
-        // cy.get('form#searchform').within(() => {
-        //     cy.get('input[name="search"]')
-        //         .first()
-        //         .type('Jamk', { force: true });
-        //     cy.root().submit();
-        // });
-
-        //fails!
-        // cy.get('input[name="search"]').filter(':visible').first().type('JAMK'); // type without {enter}
-
-        // // wait for autocomplete results
-        // cy.get('.suggestions-result') // Wikipedia’s suggestion class
-        //     .contains('Jyv%C3%A4skyl%C3%A4n ammattikorkeakoulu')
-        //     .click();
-
-        // and a million more fails which AI didn't even know how to fix, as
-        // demonstrated in spec.cy.js
-
-        //only reliable workaround, literally just go to url:
-        cy.visit(
-            'https://fi.wikipedia.org/wiki/Jyv%C3%A4skyl%C3%A4n_ammattikorkeakoulu'
-        );
+        // tätä tekoöly ei osanut tehdä, sain apua opiskelijatovereiltani.
+        cy.get('.search-toggle').click();
+        cy.get('input[name="search"]:visible').type('JAMK');
+        cy.get('input[name="search"]:visible').should('have.value', 'JAMK');
+        cy.get('input[name="search"]:visible').type('{enter}');
+        cy.wait(3000);
 
         // check we're on the right page
         cy.url().should('include', 'Jyv%C3%A4skyl%C3%A4n_ammattikorkeakoulu');
